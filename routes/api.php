@@ -5,6 +5,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\AccessTokenController;
+use App\Http\Controllers\Api\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -20,6 +21,7 @@ use App\Http\Controllers\api\AccessTokenController;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+Route::apiResource('post', PostController::class);
 
 Route::apiResource('products', ProductController::class);
 Route::apiResource('category', CategoryController::class);
@@ -27,3 +29,4 @@ Route::post('auth/access-tokens', [AccessTokenController::class, 'store'])
     ->middleware('guest:sanctum');
 Route::delete('auth/access-tokens/{token?}', [AccessTokenController::class, 'destroy'])
     ->middleware('auth:sanctum');
+

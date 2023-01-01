@@ -30,8 +30,8 @@ class CategoryController extends Controller
         $request->validate([
             'name'=>'required|string|max:255'
         ]);
-        $product=Category::create($request->all());
-        return $product;
+        $category=Category::create($request->all());
+        return $category;
     }
 
     /**
