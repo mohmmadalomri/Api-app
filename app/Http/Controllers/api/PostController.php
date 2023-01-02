@@ -22,7 +22,7 @@ class PostController extends Controller
     public function index()
     {
 
-        return Post::pagenate();
+        return Post::paginate('5');
     }
 
     /**
@@ -33,13 +33,18 @@ class PostController extends Controller
      */
     public function store(Request $request)
     {
-//        $request->validate([
-//            'title'=>'required|string|max:255',
-//            'content'=>'required|string',
-//
-//        ]);
-//        $post->user_id=Auth::id();
+        $request->validate([
+            'title'=>'required|string|max:255',
+            'content'=>'required|string',
+            'image'=>'|image'
+
+        ]);
         $data=$request->all();
+       $image=$request->file('image');
+       if ($request->hasFile('image')){
+           $imageurl=$image->store('image','public');
+           $data['image']=$imageurl;
+       }
         $data['user_id']=Auth::id();
         $post=Post::create($data);
         return $post;
@@ -51,9 +56,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Post $post)
     {
-        //
+        return $post;
     }
 
     /**
@@ -63,9 +68,17 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(Request $request, Post $post)
     {
-        //
+        $request->validate([
+            'title'=>'required|string|max:255',
+            'content'=>'required|string',
+            'image'=>'string|image'
+
+        ]);
+        $post->update($request->all());
+        return $post;
+
     }
 
     /**
@@ -74,8 +87,9 @@ class PostController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Post $post)
     {
-        //
+
+        return $post->delete();;
     }
 }
