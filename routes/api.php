@@ -6,6 +6,7 @@ use App\Http\Controllers\api\ProductController;
 use App\Http\Controllers\api\CategoryController;
 use App\Http\Controllers\api\AccessTokenController;
 use App\Http\Controllers\Api\PostController;
+use App\Http\Controllers\Api\ComentController;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,7 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 Route::apiResource('post', PostController::class);
-
+Route::apiResource('coment', ComentController::class);
 Route::apiResource('products', ProductController::class);
 Route::apiResource('category', CategoryController::class);
 Route::post('auth/access-tokens', [AccessTokenController::class, 'store'])
